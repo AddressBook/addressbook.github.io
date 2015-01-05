@@ -53,6 +53,8 @@
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
               <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> 추가</button>
+              <button type="button" id="addBlankButton" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> 빈칸추가</button>
+              <button type="button" id="deleteLastButton" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 마지막삭제</button>
             </div>
           </div>
         </form>
@@ -67,14 +69,16 @@
     <script>
       $(function(){
         var addressList = JSON.parse(localStorage.getItem("addressList"));
-        addressList.reverse();
+        if (addressList) {
+          addressList.reverse();
+        }
         var html = '';
         for (var i in addressList) {
           var address = addressList[i];
           if (parseInt(i) % 20 === 0) {
             html += '<div class="row addressRow"><br>';
           }
-          html += '<div class="col-xs-6" style="margin-top:2px;margin-bottom:2px">';
+          html += '<div class="col-xs-6" style="margin-top:2px;margin-bottom:2px'+(address.blank?';visibility:hidden':'')+'">';
           html += '' + address.postcode + '<br>';
           html += '<small>'+address.address1 + '<br>';
           html += address.address2 + '</small>';
@@ -86,6 +90,34 @@
         }
         $("#addressList").append($(html));
 
+        $("#deleteLastButton").click(function() {
+          var addressList = JSON.parse(localStorage.getItem("addressList"));
+          addressList.pop();
+          localStorage.setItem("addressList", JSON.stringify(addressList));
+          location.reload();
+        });
+        $("#addBlankButton").click(function() {
+          var addressList = localStorage.getItem("addressList");
+          if (!addressList) {
+            addressList = [];
+          } else {
+            addressList = JSON.parse(addressList);
+          }
+          var address = {};
+          address.blank = true;
+          address.postcode = "안";
+          address.address1 = "녕";
+          address.address2 = "하";
+          address.name = "세";
+          address.title = "요";
+          address.salutation = ".";
+
+          addressList.push(address);
+          localStorage.setItem("addressList", JSON.stringify(addressList));
+          location.reload();
+
+        });
+        
         $("#formAddress").on('submit', function() {
           var addressList = localStorage.getItem("addressList");
           if (!addressList) {
