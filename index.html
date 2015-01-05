@@ -55,6 +55,7 @@
               <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> 추가</button>
               <button type="button" id="addBlankButton" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> 빈칸추가</button>
               <button type="button" id="deleteLastButton" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 마지막삭제</button>
+              <button type="button" id="deleteAllButton" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 모두삭제</button>
             </div>
           </div>
         </form>
@@ -96,6 +97,12 @@
           localStorage.setItem("addressList", JSON.stringify(addressList));
           location.reload();
         });
+
+        $("#deleteAllButton").click(function() {
+          localStorage.removeItem("addressList");
+          location.reload();
+        });
+
         $("#addBlankButton").click(function() {
           var addressList = localStorage.getItem("addressList");
           if (!addressList) {
