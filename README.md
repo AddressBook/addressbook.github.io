@@ -1,4 +1,4 @@
-[zip](http://seongyooncho.github.io/zip/)
+[AddressBook.github.io](http://addressbook.github.io/)
 ===
 
 라벨지(20장, A4, [규격코드 220](http://www.label.kr/Store/DetailView.aspx?pClass2=220))에 프린트하기 위한 주소 입력기
